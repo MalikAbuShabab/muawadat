@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-Italic.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-Italic.svg#LTWave-Italic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-Light.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-Light.svg#LTWave-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-Medium.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-Medium.svg#LTWave-Medium") format("svg");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-Regular.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-Regular.svg#LTWave-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-MediumItalic.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-MediumItalic.svg#LTWave-MediumItalic")
+      format("svg");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-LightItalic.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-LightItalic.svg#LTWave-LightItalic")
+      format("svg");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-ThinItalic.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-ThinItalic.svg#LTWave-ThinItalic") format("svg");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LT Wave";
+  src: url("dehinted-subset-LTWave-Thin.ttf") format("truetype"),
+    url("dehinted-subset-LTWave-Thin.svg#LTWave-Thin") format("svg");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
