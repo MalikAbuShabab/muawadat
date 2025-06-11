@@ -1,0 +1,314 @@
+.darkgreen {
+    background: #015158;
+    color: #fff;
+}
+
+.darkgreen:hover {
+    color: #fff;
+}
+
+.list-style-none {
+    list-style: none;
+}
+
+input {
+    /* height: 43px; */
+    padding: 10px;
+    /* border: none; */
+    border-radius: 5px;
+}
+
+.display-6 {
+    font-size: 12px;
+}
+
+.categories_explore a {
+    background: #eee;
+    margin: 5px;
+    border-radius: 10px;
+}
+.banner_header .Discover {
+    margin-top: 130px;
+    border-radius: 8px;
+    border: 1px solid#fff;
+}
+article.site-header {
+    background-color: #015158 !important;
+    backdrop-filter: blur(40px);
+    padding: 10px 0 !important;
+}
+article.site-header nav.navbar.navbar-expand-lg.bg-transparent {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.banner_header,
+.available_Sale {
+    /* background: url(../img/banner.jpg); */
+    background: url("/assets/img/banner.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;
+    top: -110px;
+    min-height: 100vh;
+}
+
+.Discover {
+    background: #c5b6b1d1;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 40px 0;
+}
+
+.Discover ul {
+    list-style: none;
+    padding: 10px 0;
+    display: inline-flex;
+    gap: 10px;
+}
+
+.Discover ul a {
+    background: #fff;
+    border-radius: 9px;
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-size: 10px;
+}
+
+.client_user ul li {
+    display: flex;
+    align-items: center;
+}
+
+.viewed_Recently ul li {
+    background: #015158;
+    color: #fff;
+}
+
+.available_Sale {
+    padding: 70px 50px;
+    border-radius: 12px;
+}
+
+.available_Sale a {
+    background: transparent;
+    border-radius: 7px;
+    color: #015158 !important;
+    font-weight: 500;
+    padding: 9px 21px;
+    display: inline-block;
+    font-size: 24px !important;
+    font-family: "Mulish";
+}
+
+.footer-10 {
+    background: #f5feff;
+    padding: 0 0 4em 0;
+}
+
+.footer-10 .footer-heading {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.footer-10 a {
+    color: #000;
+}
+
+.footer-10 .con.con-1 {
+    background: #1e1e1e;
+}
+
+.footer-10 .con.con-2 {
+    background: #1c1c1c;
+}
+
+.footer-10 .con.con-3 {
+    background: #252525;
+}
+
+.footer-10 .con-info .icon {
+    width: 50px;
+    height: 50px;
+    background: #1089ff;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.footer-10 .con-info .icon span {
+    color: #fff;
+    font-size: 24px;
+}
+
+.footer-10 .con-info span {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-10 .subscribe-form .form-group {
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 7px;
+    background: #015158;
+}
+
+.footer-10 .subscribe-form .form-group input {
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    color: #fff !important;
+    font-size: 16px;
+    border-radius: 0;
+    margin-top: 4px;
+}
+
+.footer-10 .subscribe-form .form-group input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: rgb(255, 255, 255) !important;
+}
+
+.footer-10 .subscribe-form .form-group input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: rgb(255, 255, 255) !important;
+}
+
+.footer-10 .subscribe-form .form-group input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: rgb(255, 255, 255) !important;
+}
+
+.footer-10 .subscribe-form .form-group input:-moz-placeholder {
+    /* Firefox 18- */
+    color: rgb(255, 255, 255) !important;
+}
+
+.footer-10 .subscribe-form .form-group input:focus {
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.footer-10 .subscribe-form .form-group .submit {
+    color: #015158 !important;
+    display: block;
+    width: 130px;
+    height: 38px;
+    font-size: 16px;
+    background: #ffffff !important;
+    border: none;
+    margin: 5px;
+}
+
+.footer-10 .subscribe-form .form-group .submit:hover,
+.footer-10 .subscribe-form .form-group .submit:focus {
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.footer-10 .subscribe-form .subheading {
+    display: inline-block;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+}
+
+.footer-10 .ftco-footer-social li a {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.view_details_slider .carousel-control-prev,
+.view_details_slider .carousel-control-prev {
+    display: none;
+}
+.Company_name h3,
+.Liabilities h4,
+.dollar_aed h4:first-child,
+.financial h4 {
+    color: #015158;
+}
+.dollar_aed h4:last-child {
+    text-decoration: line-through;
+    color: #a9a9a9;
+}
+
+.banner_header .Discover .btn {
+    text-transform: capitalize !important;
+}
+.terominal_client {
+    margin-top: -100px;
+    padding: 40px 0 !important;
+    height: auto;
+    min-height: auto;
+}
+body .render_full_recently_viewed .h2-heading {
+    text-align: left;
+    text-transform: capitalize !important;
+    font-size: 36px;
+}
+
+.recently_arrived_banner {
+    padding: 60px 0 !important;
+}
+.recently_arrived_banner .available_Sale {
+    top: 0;
+    min-height: 300px;
+    height: 400px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+.recently_arrived_banner .available_Sale h5 {
+    color: #fff;
+    font-size: 30px;
+}
+.recently_arrived_banner .center_discover h3 {
+    font-size: 36px;
+    font-family: "Mulish" !important;
+    font-weight: 700;
+}
+.social-icons a {
+    margin-right: 10px;
+    font-size: 20px;
+    color: #015158 !important;
+}
+.recently_arrived_banner .center_discover a {
+    color: #015158;
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+.render_full_new_products .h2-heading.def.custom-color {
+    text-align: left;
+    text-transform: capitalize !important;
+    font-size: 36px;
+    font-family: "Mulish" !important;
+    font-weight: 700;
+}
+.h2-heading {
+    text-align: left;
+    text-transform: capitalize !important;
+    font-size: 36px;
+    font-family: "Mulish" !important;
+    font-weight: 700;
+}
+.categories_explore h3 {
+    text-align: left;
+    text-transform: capitalize !important;
+    font-size: 36px;
+    font-family: "Mulish" !important;
+    font-weight: 700;
+}
+.footer a {
+    text-decoration: none;
+    color: #1d2724 !important;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Mulish" !important;
+}
+.btn-custom-view-more {
+    text-transform: capitalize;
+}
