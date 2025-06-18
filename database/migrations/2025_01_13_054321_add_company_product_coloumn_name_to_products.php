@@ -24,6 +24,7 @@ class AddCompanyProductColoumnNameToProducts extends Migration
            $table->string('country_id')->nullable();
            $table->string('company_technology')->nullable();
            $table->boolean('is_company_list')->default(0);
+
         });
     }
 

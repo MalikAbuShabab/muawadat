@@ -142,10 +142,11 @@ class AppServiceProvider extends ServiceProvider
         if (strpos(URL::current(), '/api/') !== false) {
         } else {
             $domain = $request->getHost();
+          //  dd($domain);
             $domain = str_replace(array('http://', '.test.com/login'), '', $domain);
             $subDomain = explode('.', $domain);
             $existRedis = Redis::get($domain);
-           
+
             if ($domain != env('Main_Domain')) {
                 Redis::del($domain);
                 if (!$existRedis) {
@@ -155,7 +156,7 @@ class AppServiceProvider extends ServiceProvider
                                 ->orWhere('sub_domain', $subDomain[0]);
                         })
                         ->first();
-                        
+
                     if ($client) {
                         Redis::set($domain, json_encode($client->toArray()), 'EX', 36000);
                         $existRedis = Redis::get($domain);
@@ -187,7 +188,7 @@ class AppServiceProvider extends ServiceProvider
                                 'strict' => false,
                                 'engine' => null
                             ];
-                            
+
                             Config::set("database.connections.$database_name", $default);
                             Config::set("client_id", 1);
                             Config::set("client_connected", true);
