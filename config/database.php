@@ -42,7 +42,7 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
-        
+
         // 'mysql' => [
         //     'driver' => 'mysql',
         //     'host' => 'p2p-marketplace-db-cluster.ct6gimiesp6k.me-central-1.rds.amazonaws.com',
@@ -68,7 +68,7 @@ return [
         //     'host' => env('DB_HOST', 'p2p-marketplace-db-cluster.ct6gimiesp6k.me-central-1.rds.amazonaws.com'),
         //     'port' => env('DB_PORT', '3306'),
         //     'database' => env('DB_DATABASE', 'royoorders'),
-	    //     'username' => env('DB_USERNAME', 'p2pmktplaceadmin'), 
+	    //     'username' => env('DB_USERNAME', 'p2pmktplaceadmin'),
         //     'password' => env('DB_PASSWORD', 'wasd1234'),
         //     'unix_socket' => env('DB_SOCKET', ''),
         //     'charset' => 'utf8mb4',
@@ -82,7 +82,7 @@ return [
         //     ]) : [],
         // ],
 
-        
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -102,7 +102,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        
+
         'mydsql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -161,7 +161,7 @@ return [
                 'dump_binary_path' => 'D:\xampp\mysql\bin', // only the path, so without `mysqldump` or `pg_dump`
                 'use_single_transaction',
                 'timeout' => 60 * 5, // 5 minute timeout
-            ], 
+            ],
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
@@ -310,30 +310,14 @@ return [
 
     'redis' => [
 
-        // 'client' => env('REDIS_CLIENT', 'array'),
-        'client' => env('REDIS_CLIENT', 'phpredis'),
-
-        'options' => [
-            'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
-        ],
+        'client' => 'phpredis',
 
         'default' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
+            'host' => '127.0.0.1',
+            'password' => null,
+            'port' => 6379,
+            'database' => 0,
         ],
-
-        'cache' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
-        ],
-
     ],
 
 ];

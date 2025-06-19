@@ -45,7 +45,7 @@ class PostController extends FrontController
      */
     public function index()
     {
-         
+
         $getAdditionalPreference = getAdditionalPreference(['is_rental_weekly_monthly_price']);
         $langId = Session::get('customerLanguage');
         $curId = Session::get('customerCurrency');
@@ -64,7 +64,7 @@ class PostController extends FrontController
                 $q->where('service_type', 'p2p');
             });
         }
-        
+
         $categories = $categories->where('is_core', 1)->orderBy('parent_id', 'asc')->orderBy('position', 'asc')->where('deleted_at', NULL)->where('status', 1);
 
         if ($celebrity_check == 0)
@@ -72,7 +72,7 @@ class PostController extends FrontController
 
         $categories = $categories->get();
         $projectType = Brand::with('translation_one')->where('status', 1)->get();
-       
+
         $serviceaArea = ServiceArea::get();
         $countries = Country::orderBy('nicename', 'asc')->get();
 
@@ -98,8 +98,8 @@ class PostController extends FrontController
                 ->where('attribute_categories.category_id', $category_id)
                 ->where('attributes.status', '!=', 2)
                 ->orderBy('position', 'asc')->get();
-            
-          
+
+
         }
 
         $returnHTML = view('frontend.template_nine.posts.product-attribute')->with(['productAttributes' => $productAttributes,  'attribute_value' => [], 'attribute_key_value' =>[]])->render();
@@ -129,7 +129,7 @@ class PostController extends FrontController
     {
         try {
             // dd($request->all());
-            
+
 
             //ProductVariant::where('product_id',$id)->update(['status'=>0]);
             // $product = Product::where('id', $id)->firstOrFail();
@@ -150,12 +150,12 @@ class PostController extends FrontController
             if ($validation->fails()) {
                 return redirect()->back()->withInput()->withErrors($validation);
             }
-           
+
 
             $product = $this->saveProduct($request);
             $fileIds = $this->uploadProductImages($product, $request);
 
-            
+
 
             if( clientPrefrenceModuleStatus('p2p_check') ) {
                     // Add Attributes
@@ -170,9 +170,9 @@ class PostController extends FrontController
                     'id' => $product->url_slug
                 ]);
             }
-            
-            
-           
+
+
+
             $toaster = $this->successToaster(__('Success'),__('Product updated successfully') );
             return redirect()->back()->with('toaster', $toaster);
         } catch (\Exception $e) {
@@ -196,7 +196,7 @@ class PostController extends FrontController
 			]);
 
 			if ($validator->fails()) {
-			
+
 				return $this->errorResponse($validator->errors()->first(), 422);
 			}
             // dd($request->all());
@@ -214,14 +214,14 @@ class PostController extends FrontController
 			$generated_slug = $sku_url.'.'.$slug;
 
             $users = Auth::user();
-	
+
 			$user = User::where('id',$users->id)->first();
-			
+
 			$user_vendor = UserVendor::where('user_id', $users->id)->first();
             if(empty($user_vendor)){
-              
+
                 $user->assignRole(4); // by default make this user as vendor
-				
+
 				$user->is_admin = 1;
 				$user->save();
 
@@ -245,26 +245,26 @@ class PostController extends FrontController
 				if( !empty($p2p_type) ) {
 					$category_id = Category::where('type_id', $p2p_type->id)->get();
 					$categories_ids = [];
-					
+
 					if( !empty($category_id) ) {
 						foreach($category_id as $key => $val) {
 							$categories_ids[] = $val->id;
 						}
 					}
 					$request->request->add(['selectedCategories'=> $categories_ids]);
-					
+
 				}
-				
+
 				$this->addDataSaveVendor($request, $vendor->id);
 				$user_vendor = UserVendor::where('user_id', $users->id)->first();
-                   
+
                 }
-            
+
 			if(@$user_vendor->vendor_id){
 				$product = new Product();
 				$product->sku = $slug;
 				$product->url_slug = $generated_slug;
-				$product->title = $request->product_name;        
+				$product->title = $request->product_name;
 				$product->category_id = $request->category_id;
 				$product->description = $request->product_description ?? '';
                 $product->body_html = $request->product_description ?? '';
@@ -289,7 +289,7 @@ class PostController extends FrontController
 				if (!$client_lang) {
 					$client_lang = ClientLanguage::where('is_active', 1)->first();
 				}
-                
+
 				$product->save();
 				if ($product->id > 0) {
 					$datatrans[] = [
@@ -307,14 +307,14 @@ class PostController extends FrontController
 					$product_category->save();
 					$proVariant = new ProductVariant();
 					$proVariant->price = $request->price ?? 0;
-					
+
                     $week_price = ($request->price *4 / 7);
                     $month_price = ($request->price *4 * 3 / 30);
 
                     $proVariant->week_price = round($week_price) ?? 0;
-                
+
                     $proVariant->month_price = round($month_price) ?? 0;
-					
+
 					if(@$request->emirate){
 						$proVariant->emirate = $request->emirate;
 					}
@@ -333,23 +333,23 @@ class PostController extends FrontController
 					$proVariant->sku = $slug;
 					$proVariant->title =$slug . '-' .  empty($request->product_name) ?$slug : $request->product_name;
 					$proVariant->product_id = $product->id;
-					$proVariant->quantity = 1;            
-					$proVariant->status = 1;            
+					$proVariant->quantity = 1;
+					$proVariant->status = 1;
 					$proVariant->barcode = $this->generateBarcodeNumber();
 					$proVariant->save();
 					ProductTranslation::insert($datatrans);
-					
+
 					$product_detail = Product::where('id', $product->id)->firstOrFail();
-					
+
 					$data = ['product_detail' => $product_detail];
 
 
 					// Upload Image
-					
+
                     $fileIds = $this->uploadProductImages($product, $request);
 
                     $this->uploadProductImage360($request, $product);
-					
+
 
                     // Add Attributes
                     $this->addProductAttribute($request, $product);
@@ -357,10 +357,10 @@ class PostController extends FrontController
                     // Add Attributes
 					$this->addProductAvailability($request, $product);
 
-					
+
                     $toaster = $this->successToaster(__('Success'),__('Product added successfully') );
                     return redirect()->back()->with('toaster', $toaster);
-				
+
 			}else{
                 $toaster = $this->errorToaster(__('ERROR'),'Sorry, You are not a vendor.' );
                 return redirect()->back()->with('toaster', $toaster);
@@ -368,9 +368,9 @@ class PostController extends FrontController
 		}else{
             $toaster = $this->errorToaster(__('ERROR'),'Sorry, You are not a vendor.' );
             return redirect()->back()->with('toaster', $toaster);
-            
+
 		}
-		   
+
         } catch (\Exception $e) {
             $toaster = $this->errorToaster(__('ERROR'),$e->getMessage() );
             return redirect()->back()->with('toaster', $toaster);
@@ -433,7 +433,7 @@ class PostController extends FrontController
                         $image->is_default = 1;
                         $image->media_id = $imageId;
                         $image->save();
-                                                
+
                     }
                 }
                 //return response()->json(['htmlData' => $resp]);
@@ -442,7 +442,7 @@ class PostController extends FrontController
                 $img->media_type = 4;
                 $img->vendor_id = $product->vendor_id;
                 $img->path = Storage::disk('s3')->put($this->folderName, $files, 'public');
-                $img->save();					
+                $img->save();
                 if ($img->id > 0) {
                     $imageId = $img->id;
                     $image = new ProductImage();
@@ -450,9 +450,9 @@ class PostController extends FrontController
                     $image->is_default = 1;
                     $image->media_id = $img->id;
                     $image->save();
-                                    
+
                 }
-            }					
+            }
         }
         return true;
      }
@@ -477,7 +477,7 @@ class PostController extends FrontController
             if(@$date_availability_data){
                 ProductAvailability::insert($date_availability_data);
             }
-            
+
         }
         return true;
      }
@@ -486,19 +486,19 @@ class PostController extends FrontController
         if( checkTableExists('product_attributes') ) {
             if( !empty($request->attribute) ) {
                 $attribute = $request->attribute;
-                
+
                 if( !empty($attribute) ) {
-            
+
                     $insert_arr = [];
                     $insert_count = 0;
                     // \Log::info($attribute);
                     foreach($attribute as $key => $value) {
                         // \Log::info($value);
                         if( !empty($value) && !empty($value['option'] && is_array($value) )) {
-                            
+
                             if(!empty($value['type']) && $value['type'] == 1 ) { // dropdown
                                 $value_arr = @$value['value'];
-                                
+
                                 foreach( $value['option'] as $key1 => $val1 ) {
                                     if( @in_array($val1['option_id'], $value_arr) ) {
 
@@ -516,7 +516,7 @@ class PostController extends FrontController
                             }
                             else {
                                 $value_arr = @$value['value'];
-                                
+
                                 // \Log::info($option['option_id']);
                                 foreach($value['option'] as $option_key => $option) {
                                     if(!empty($value['type']) && $value['type'] == 4 ) { // textbox
@@ -530,7 +530,7 @@ class PostController extends FrontController
                                         $insert_arr[$insert_count]['is_active'] = 1;
                                     }
                                     elseif(!empty($value['type']) && $value['type'] == 6) {
-                                        
+
                                         $insert_arr[$insert_count]['product_id'] = $product->id;
                                         $insert_arr[$insert_count]['attribute_id'] = $value['id'];
                                         $insert_arr[$insert_count]['key_name'] = $value['attribute_title'];
@@ -551,13 +551,13 @@ class PostController extends FrontController
                                         $insert_arr[$insert_count]['longitude'] = $value['longitude'] ?? null;
                                         $insert_arr[$insert_count]['is_active'] = 1;
                                     }
-                                    
+
                                     $insert_count++;
                                 }
                             }
                         }
 
-                    
+
                     }
                     if( !empty($insert_arr) ) {
                         ProductAttribute::where('product_id',$request->product_id)->delete();
@@ -607,7 +607,7 @@ class PostController extends FrontController
      */
     public function update(Request $request, $domain = '', $id)
     {
-       
+
     }
 
     /**
@@ -634,10 +634,10 @@ class PostController extends FrontController
         $slug = $this->generateSlug($request->product_name);
         $slug = str_replace(' ', '-',$slug);
         $generated_slug = $sku_url.'.'.$slug;
-        $user = Auth::user();	
+        $user = Auth::user();
         $user_vendor = UserVendor::where('user_id', $user->id)->first();
         if(@$user_vendor->vendor_id || $user->is_superadmin == 1){
-            
+
             $product = new Product();
             $product->sku = $slug;
             $product->url_slug = $generated_slug;
@@ -652,7 +652,7 @@ class PostController extends FrontController
                 $client_lang = ClientLanguage::where('is_active', 1)->first();
             }
             $product->save();
-            
+
             if ($product->id > 0) {
                 $datatrans[] = [
                     'title' => $request->product_name??null,
@@ -673,11 +673,11 @@ class PostController extends FrontController
                 $proVariant->title =$slug . '-' .  empty($request->product_name) ?$slug : $request->product_name;
                 $proVariant->product_id = $product->id;
                 $proVariant->barcode = $this->generateBarcodeNumber();
-                $proVariant->quantity = 1;            
+                $proVariant->quantity = 1;
                 $proVariant->status = 1;
                 $proVariant->week_price = $request->week_price ?? 0;
                 $proVariant->month_price = $request->monthly_price ?? 0;
-               
+
                 if (@$request->compare_at_price) {
                     $proVariant->compare_at_price = $request->compare_at_price;
                 }
@@ -686,7 +686,7 @@ class PostController extends FrontController
                 }
                 $proVariant->save();
                 ProductTranslation::insert($datatrans);
-                
+
                 if (@$request->date_availability){
                     // Define your start and end dates
                     // Initialize an empty array to store the dates
@@ -695,7 +695,7 @@ class PostController extends FrontController
                         $dates = explode('to', $request->date_availability);
                         $start_date = Carbon::parse(@$dates[0]);
                         $end_date = Carbon::parse(@$dates[1]);
-                        
+
                         // Loop through the dates and add them to the array
                         while ($start_date->lte($end_date)) {
                             $date_availability_data[] = [
@@ -724,7 +724,7 @@ class PostController extends FrontController
                             'updated_at' => Carbon::now()
                         ];
                     }
-                    
+
                 }
 
                 return $product;
@@ -749,7 +749,7 @@ class PostController extends FrontController
 
     public function uploadProductImages($product, $request)
     {
-        
+
         if ($request->has('file')) {
             $imageId = [];
             $files = $request->file('file');
@@ -768,13 +768,13 @@ class PostController extends FrontController
                         $image->is_default = 1;
                         $image->media_id = $img->id;
                         $image->save();
-                       
+
                     }
                 }
-                
-            } 
+
+            }
             // dd($imageId);
-           
+
             return $imageId;
         }
 
@@ -804,14 +804,14 @@ class PostController extends FrontController
 				$sku_url =  ($client->sub_domain.env('SUBMAINDOMAIN'));
 			}
 
-           
-		 
+
+
             $slug = $this->generateSlug($request->name);
             $slug = str_replace(' ', '-',$slug);
             $generated_slug = $sku_url.'.'.$slug;
             $user = Auth::user();
             $user_vendor = UserVendor::where('user_id', $user->id)->first();
-            
+
             if(@$request->address){
                 $locationAddress = $request->address;
             }
@@ -821,7 +821,7 @@ class PostController extends FrontController
             if(@$request->long){
                 $locationLong = $request->long;
             }
-            
+
 
             $product = Product::updateOrCreate(
                 ['id' => $request->company_id],
@@ -864,7 +864,7 @@ class PostController extends FrontController
                 'product_id' => $product->id,
                 'language_id' => $client_lang->language_id
             ];
-            
+
             $product_category = new ProductCategory();
             $product_category->product_id = $product->id;
             $product_category->category_id = $request->company_type;
@@ -875,11 +875,11 @@ class PostController extends FrontController
             $proVariant->title =$slug . '-' .  empty($request->name) ?$slug : $request->name;
             $proVariant->product_id = $product->id;
             $proVariant->barcode = $this->generateBarcodeNumber();
-            $proVariant->quantity = 1;            
+            $proVariant->quantity = 1;
             $proVariant->status = 1;
             $proVariant->week_price =  0;
             $proVariant->month_price = 0;
-           
+
             if (@$request->compare_at_price) {
                 $proVariant->compare_at_price = $request->compare_at_price;
             }
@@ -890,7 +890,7 @@ class PostController extends FrontController
             ProductTranslation::insert($datatrans);
 
             // Upload Image
-					
+
             $fileIds = $this->uploadProductImages($product, $request);
             $this->uploadProductImage360($request, $product);
             // Add Attributes
@@ -910,12 +910,12 @@ class PostController extends FrontController
                         }
                     }
                 }
-            
+
                 // Store paired fields in the dynamic_fields table
                 foreach ($pairedFields as $field) {
                     $dynamicInputs = new ListingDynamicField();
                     $dynamicInputs->product_id = $product->id;
-                    $dynamicInputs->field_name = $field['name']; 
+                    $dynamicInputs->field_name = $field['name'];
                     $dynamicInputs->field_value = $field['value'];
                     $dynamicInputs->form_id = 1;
                     $dynamicInputs->save();
@@ -925,9 +925,9 @@ class PostController extends FrontController
 
             Session::put('post_company_id', $product->id);
             return response()->json(['message' => 'Product saved successfully!', 'product' => $product, 'status' => '200']);
-    
+
         } catch (\Exception $e) {
-            
+
             \Log::error('Error saving product: ' . $e->getMessage());
             // \Log::error('Error saving product:', [
             //     'message'   => $e->getMessage(),
@@ -935,13 +935,13 @@ class PostController extends FrontController
             //     'line'      => $e->getLine(),
             //     'trace'     => $e->getTraceAsString(),
             // ]);
-    
+
             return response()->json(['message' => 'Failed to save product. Please try again later.'], 500);
         }
     }
 
     public function storeCompanyFinancialInfo(Request $request){
-       
+
         try {
 
             // $step2Data = $request->except('_token'); // Exclude CSRF token
@@ -992,9 +992,9 @@ class PostController extends FrontController
                 $productVariant->quantity = 1;
                 $productVariant->save();
             }
-    
+
             return response()->json(['message' => 'Financial Info saved successfully!', 'financialInfo' => $financialInfo, 'status' => '200']);
-    
+
         } catch (\Exception $e) {
             \Log::error('Error saving company financial data: ' . $e->getMessage());
             return response()->json(['message' => 'Failed to save product. Please try again later.'], 500);
@@ -1002,7 +1002,7 @@ class PostController extends FrontController
     }
 
     public function uploadCompanyDoc(Request $request){
-       
+
         try{
             $product = Product::where('id',$request->company_id)->first();
             if($product){
@@ -1023,7 +1023,7 @@ class PostController extends FrontController
                                 $image->media_id = $img->id;
                                 $image->save();
                             }
-                    } 
+                    }
                 }
                 if ($request->hasFile('valuation_report_file')) {
                     $file = $request->file('valuation_report_file');
@@ -1041,8 +1041,8 @@ class PostController extends FrontController
                             $image->media_id = $img->id;
                             $image->save();
                         }
-                } 
-                   
+                }
+
                 if ($request->hasFile('legal_document_file')) {
                     $file = $request->file('legal_document_file');
                         $img = new VendorMedia();
@@ -1062,29 +1062,29 @@ class PostController extends FrontController
                 }
                 $product->is_company_list = 1;
                 $product->save();
-               
-                $admin = User::where('is_superadmin', 1)->first();   
+
+                $admin = User::where('is_superadmin', 1)->first();
                 $admin->notify(new NewPostNotification($product));
-                
+
                 if (Session::has('post_company_id')) {
                     \Log::info(['company idsadsds in session' => Session::get('company_id')]);
                     Session::forget('post_company_id');
                 }
                 \Log::info('Add listing success');
                 return Redirect::to(url('/user/my-ads'));
-                
+
             }
 
- 
-           
-            
+
+
+
         } catch (\Exception $e) {
             \Log::error('Error upload company document: ' . $e->getMessage());
         }
     }
 
 
-   
+
 
     public function listingFormDocument()
     {
@@ -1094,9 +1094,9 @@ class PostController extends FrontController
         $addlistDocuments = VendorRegistrationDocument::with(['primary','options','options.translation' => function($query) use($language_id) {
             $query->where('language_id', session()->get('customerLanguage'));
         }])->get();
-        
+
         return response()->json($addlistDocuments);
-        
+
     }
 
 }
