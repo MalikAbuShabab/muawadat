@@ -90,7 +90,7 @@ class CustomerAuthController extends FrontController
         $navCategories = $this->categoryNav($langId);
         $set_template = WebStylingOption::where('web_styling_id',1)->where('is_selected',1)->first();
         $preferences = ClientPreference::select('signup_image')->first();
-        
+
         if($set_template->template_id == 4)
         {
             $login_page = "template_four.account.loginnew";
@@ -230,6 +230,8 @@ class CustomerAuthController extends FrontController
             $phonenumber= str_replace('-', '', $req->phone_number);
             $req->phone_number = str_replace(' ', '', $phonenumber);
             if( (empty($req->email)) && (empty($req->phone_number)) ) {
+             //   dd('dd');
+
                 $validator = $req->validate([
                     'email'  => 'required',
                     'phone_number'  => 'required|unique:users'
@@ -247,6 +249,8 @@ class CustomerAuthController extends FrontController
             else{
 
                 $preferences = ClientPreference::first();
+                //dd($preferences->verify_email);
+
                 if(!empty($req->email) && ($preferences->verify_email == 0)){
 
                     $validator = $req->validate([
@@ -293,6 +297,7 @@ class CustomerAuthController extends FrontController
             $user->phone_token = $phoneCode;
             $user->dial_code = $req->dialCode;
             $user->email_token = $emailCode;
+          //  dd($user->email_token);
             $user->phone_number = $req->phone_number;
             $user->phone_token_valid_till = $sendTime;
             $user->email_token_valid_till = $sendTime;
@@ -355,11 +360,14 @@ class CustomerAuthController extends FrontController
                     }
                 }
             }
-           
+
             if ($user->id > 0) {
                 if(!$user->is_email_verified==1){
-                    return redirect()->to('user/login');
+                  //  dd('ww');
+
+                    //  return redirect()->to('user/login');
                 }else{
+
                     Auth::login($user);
                 }
                 // Auth::login($user);
@@ -434,6 +442,8 @@ class CustomerAuthController extends FrontController
                         'mail_password', 'mail_encryption', 'mail_from', 'sms_provider', 'sms_key', 'sms_secret', 'sms_from',
                         'theme_admin', 'distance_unit', 'map_provider', 'date_format', 'time_format', 'map_key', 'sms_provider',
                         'verify_email', 'verify_phone', 'app_template_id', 'web_template_id')->first();
+               // dd($prefer);
+
                 if(getUserToken($prefer)['status']){
                     if (!empty($prefer->sms_key) && !empty($prefer->sms_secret) && !empty($prefer->sms_from)) {
                         if ($user->dial_code == "971") {
@@ -467,6 +477,8 @@ class CustomerAuthController extends FrontController
                     $sendto = $req->email;
                     try {
                         $email_template = EmailTemplate::where('slug', 'newcustomersignup')->first();
+                      //  dd($email_template->content);
+
                         if ($email_template) {
                             $email_template_content = $email_template->content;
                             $email_template_content = strtr($email_template_content, [
@@ -485,6 +497,8 @@ class CustomerAuthController extends FrontController
                                 'customer_name'          => ucwords($user->name),
                                 'email_template_content' => $email_template_content,
                             ];
+                         //   dd($data);
+
 
                             dispatch(new \App\Jobs\SendVerifyEmailJob($data));
                         }
@@ -515,6 +529,8 @@ class CustomerAuthController extends FrontController
                         $user->save();
                     }
                 }
+                Auth::login($user);
+
                 return redirect()->route('user.verify');
             }
         } catch (\Exception $e) {
@@ -601,7 +617,7 @@ class CustomerAuthController extends FrontController
     {
         try {
             $username = $request->username;
-            
+
             // Define regular expressions for phone and email validation
             $phone_regex = '/^[0-9\-\(\)\/\+\s]*$/';
             $email_regex = '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';

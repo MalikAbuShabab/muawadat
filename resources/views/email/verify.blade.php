@@ -49,21 +49,33 @@
       </style>
    </head>
    <body>
-      <section class="wrapper">
-         <div class="container" style="background: #fff;border-radius: 10px;">
-            <table style="width: 100%;">
-              <thead>
-                 <tr>
-                    <th style="text-align: center;">
-                        <a style="display: block;" href="#">
-                           <img src="{{ (isset($mailData['logo'])) ? $mailData['logo'] : $logo }}" height="50px" alt="">
-                        </a>
-                    </th>
-                 </tr>
-              </thead>
-              {!! (isset($mailData['email_template_content'])) ?  $mailData['email_template_content'] : $email_template_content !!}
-            </table>
-         </div>
-      </section>
+   <section class="wrapper">
+       <div class="container" style="background: #fff; border-radius: 10px;">
+           <table style="width: 100%;">
+               <thead>
+               <tr>
+                   <th style="text-align: center;">
+                       <a style="display: block;" href="#">
+                           <img src="{{ isset($mailData['logo']) ? $mailData['logo'] : $logo }}" height="50px" alt="">
+                       </a>
+                   </th>
+               </tr>
+               </thead>
+
+               <tbody>
+               <tr>
+                   <td style="text-align: center; padding: 20px;">
+                       <h2 style="color: #333;">Verification Code</h2>
+                       <p style="font-size: 24px; font-weight: bold; color: #000;">
+                           {!! isset($mailData['code']) ? $mailData['code'] : '' !!}
+                       </p>
+                   </td>
+               </tr>
+               </tbody>
+
+               {!! isset($mailData['email_template_content']) ? $mailData['email_template_content'] : $email_template_content !!}
+           </table>
+       </div>
+   </section>
    </body>
 </html>
